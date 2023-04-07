@@ -77,7 +77,7 @@
 // }
 
 import React, { Component } from 'react'
-import createForm from '../components/createForm'
+import createForm from '../components/createFormSelf'
 import Input from '../components/Input'
 
 const nameRules = { required: true, message: '请输入姓名！' };
@@ -91,14 +91,12 @@ class MyRCFormPage extends Component {
   }
   submit = () => {
     const { getFieldsValue, validateFields } = this.props.form
-    console.log('submit', getFieldsValue())
-    validateFields((err, val) => {
-      if (err) {
+    validateFields((err) => {
         console.log('err', err)
-      } else {
-        console.log('校验成果', val)
+      }, (val) => {
+        console.log('校验成功', val)
       }
-    })
+    )
   }
   render() {
     const { getFieldDecorator } = this.props.form

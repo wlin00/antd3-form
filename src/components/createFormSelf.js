@@ -37,23 +37,20 @@ export default function createForm(Cmp) { // hoc createForm: 接受一个表单�
     getFieldsValue = () => {
       return {...this.state}
     }
-    validateFields = (callback) => {
+    validateFields = (errCallback, callback) => {
       const err = []
       for (let field in this.options) {
-        if (this.state[field] === undefined) {
+        if (this.state[field] === undefined || this.state[field] === '' || this.state[field] === null) {
           err.push({
             [field]: '请输入'
           })
         }
       }
-      setTimeout(() => {
-        console.log('ee', err)
-        if (err.length === 0) {
-          callback(null, this.state)
-        } else {
-          callback(err, this.state)
-        }
-      })
+      if (err && err.length > 0) {
+        errCallback(err)
+      } else {
+        callback(this.state)
+      }
 
     }
     render() {
